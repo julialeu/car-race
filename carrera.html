@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Carrera de coches</title>
+    <link rel="stylesheet" href="carrera.css">
+</head>
+<body>
+<h1>Carrera de coches</h1>
+
+<label for="numPlayers">Elige el número de participantes:</label>
+
+<select
+        onchange="prepareGame()"
+        name="numPlayers"
+        id="numPlayersSelect"
+>
+    <option disabled selected value> -- select an option -- </option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+    <option value="7">7</option>
+    <option value="8">8</option>
+    <option value="9">9</option>
+</select>
+
+<br>
+<br>
+
+<button onclick="startGame()" >Iniciar</button>
+
+<br><br>
+
+<button hidden>Reiniciar</button>
+
+<div id="racingTrack"></div>
+
+<script src="carrera.js"></script>
+
+
+</body>
+</html>
