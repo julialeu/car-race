@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <meta charset="UTF-8">
     <title>Carrera de coches</title>
     <link rel="stylesheet" href="carrera.css">
@@ -8,7 +9,7 @@
 <body>
 <h1>Carrera de coches</h1>
 
-<label for="numPlayers">Elige el número de participantes:</label>
+<label for="numPlayersSelect">Elige el número de participantes:</label>
 
 <select
         onchange="prepareGame()"
@@ -30,13 +31,17 @@
 <br>
 <br>
 
-<button onclick="startGame()" >Iniciar</button>
+<button class="start-game" >Iniciar</button>
+<button class="restart-game hidden">Reiniciar</button>
 
 <br><br>
 
 <button hidden>Reiniciar</button>
 
 <div id="racingTrack"></div>
+
+
+<div id="clasification"></div>
 
 <script src="carrera.js"></script>
 
