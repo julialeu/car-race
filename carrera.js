@@ -1,9 +1,9 @@
-const FINISHING_LINE = 500;
-let players = [];
+let players = []; /* array número de coches */
 let turn = 0;
-let finalStandings = [];
+let finalStandings = []; /* array para registrar el orden de llegada */
 
 function prepareGame() {
+    /* Determinamos el número de coches */
     var element = document.getElementById("numPlayersSelect");
     var numPlayers = element.value;
     console.log('numPlayers', numPlayers);
@@ -13,6 +13,7 @@ function prepareGame() {
     racingTrack.innerHTML = '';
 
     for (let i = 0; i < numPlayers; i++) {
+        /* Bucle para asignar a cada coche su id y su imagen */
         var url = 'img/car' + (i + 1) + '.png';
         var player = {
             id: i + 1,
@@ -27,7 +28,7 @@ function prepareGame() {
     /* Iteramos los elementos del array player para pintar los coches */
     for (let player of players) {
         let spanElement = document.createElement('span');
-        spanElement.innerHTML = 'Coche ' + player.carId;
+        spanElement.innerHTML = player.carId;
 
         let imgElement = document.createElement('img');
         imgElement.src = player.carPhotoUrl;
@@ -45,7 +46,10 @@ function prepareGame() {
     }
 }
 
-
+/* Función para comenzar el juego. Sino seleccionamos
+número de coches,salta una alerta. Si se inicia el juego se oculta
+el botón de inicio y se visualiza el de reiniciar. Lo hacemos con un if-else
+ */
 $(document).ready(function () {
     $(".start-game").click(function () {
 
@@ -61,17 +65,16 @@ $(document).ready(function () {
         }
     });
 
+    /* función para reiniciar la carrera cuando pulsamos el botón */
     $(".restart-game").click(function () {
 
         $(".restart-game").addClass('hidden');
         $(".start-game").removeClass('hidden');
 
-
         for (player of players) {
             $(`#car${player.id}`).stop();
             $(`#car${player.id}`).animate({ marginLeft: "0px" }, 25);
         }
-
     });
 });
 
@@ -91,18 +94,19 @@ function playerTurn(player) {
     let random = getRandomSpeed(1, 100);
     console.log('random', random);
 
-    let duration = getRandomSpeed(1000, 4000);
+    let duration = getRandomSpeed(1000, 4000); /* variable para asignar aleatoriamente
+    la duración de cada coche */
 
     console.log('-----------');
 
     $(`#car${player.carId}`).animate(
-
-        { marginLeft: "85%" }
-        ,
+        { marginLeft: "85%" },
         duration,
         null,
         function () {
-            console.log('Terminó uno de ellos :)');
+            /*
+            Cada vez que un coche termina su animación, lo añadimos a la
+            lista de finalStandings y se registra por orden de llegada*/
 
             finalStandings.push(player.id)
 
@@ -111,72 +115,33 @@ function playerTurn(player) {
                 let racingTrack = document.getElementById('racingTrack');
                 racingTrack.innerHTML = '';
 
+                let classification = document.getElementById('classification');
+
+                let title = document.createElement('h2');
+                title.innerHTML = 'Clasificación';
+                classification.appendChild(title);
 
                 let orderList = document.createElement('ol');
                 for (let x = 0; x < players.length; x++) {
                     let li = document.createElement('li');
-                    li.innerHTML = 'Coche  ' + finalStandings[x];
+                    li.innerHTML = 'Posición ' + (x + 1) + ': Coche  ' + finalStandings[x];
                     orderList.appendChild(li);
                 }
-
-                let clasification = document.getElementById('clasification');
-                clasification.appendChild(orderList);
+                classification.appendChild(orderList);
 
                 setTimeout(() => {
                     window.location.reload();
-                }, 2000);
+                }, 3000);
 
 
             }
-
-            // player.x = player.x + random;
-            // console.log('carid: ' + carId, player.x);
-            // //Al completarse
-            // positionsArray.push(this.name); //Conforme vayan llegando los coches los añadimos a un array
-            // console.log(positionsArray);
-            //
-            // if (positionsArray.length == playersArray.length) {
-            //     //Esta condicion se ejecuta cuando hayan llegado todos a meta
-            //     reiniciar.style.display = "none";
-            //     iniciar.style.display = "initial";
-            //     //Pasamos las posiciones al array final donde los mostraremos
-            //     finalResults = positionsArray;
-            //     //Y limpiamos el array para la siguiente partida
-            //     positionsArray = [];
-            //     //Ocultamos los coches y la pista para mostrar los resultados
-            //     let coches = document.querySelectorAll(".road");
-            //     let dorsales = document.querySelectorAll(".dorsal");
-            //     coches.forEach((coche) => {
-            //         coche.style.display = "none";
-            //     });
-            //     //Ocultamos tambien los numeros dorsales
-            //     dorsales.forEach((drsl) => {
-            //         drsl.style.display = "none";
-            //     });
-            //     //Aqui construimos la lista de posiciones
-            //
-            //     for (let x = 0; x < finalResults.length; x++) {
-            //         let pos = document.createElement("div");
-            //         pos.classList.add("posiciones");
-            //         pos.innerHTML = `<p><u>Posicion ${x + 1} :</u> Coche ${
-            //             finalResults[x]
-            //         }</p></br>`;
-            //         tablePositions.appendChild(pos);
-            //     }
-            //     iniciar.style.display = "none"; //Ocultamos el boton en los resultados
-            //     containerOne.appendChild(tablePositions); //Los mostramos por pantalla
-            //
-            //     //Esta funcion mostrar los resultados 3 segundos y luego volvera a la pantalla de juego
-            //     // mostrando de nuevo los coches y los botones
-            //     setTimeout(() => {
-            //         window.location.reload();
-            //     }, 3000);
-            // }
         }
     );
 
 }
-
+/* función que determina aleatoriamente la duración de animate
+de cada coche
+ */
 function getRandomSpeed(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);

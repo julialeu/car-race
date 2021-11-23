@@ -5,10 +5,15 @@
     <meta charset="UTF-8">
     <title>Carrera de coches</title>
     <link rel="stylesheet" href="carrera.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inconsolata&family=Roboto:wght@100&display=swap" rel="stylesheet">
+
 </head>
 <body>
-<h1>Carrera de coches</h1>
+<h1 class="blinking">¡Carrera de coches!</h1>
 
+<div class="selector">
 <label for="numPlayersSelect">Elige el número de participantes:</label>
 
 <select
@@ -16,7 +21,7 @@
         name="numPlayers"
         id="numPlayersSelect"
 >
-    <option disabled selected value> -- select an option -- </option>
+    <option value="">Select an option</option>
     <option value="1">1</option>
     <option value="2">2</option>
     <option value="3">3</option>
@@ -28,11 +33,15 @@
     <option value="9">9</option>
 </select>
 
+</div>
+
 <br>
 <br>
 
-<button class="start-game" >Iniciar</button>
+<div class="buttons">
+<button class="start-game" >¡A jugar!</button>
 <button class="restart-game hidden">Reiniciar</button>
+</div>
 
 <br><br>
 
@@ -41,7 +50,7 @@
 <div id="racingTrack"></div>
 
 
-<div id="clasification"></div>
+<div id="classification"></div>
 
 <script src="carrera.js"></script>
 
